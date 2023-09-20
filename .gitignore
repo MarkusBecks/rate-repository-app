@@ -9,6 +9,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 steps.md
+%ProgramData%
 
 web-build/
 
