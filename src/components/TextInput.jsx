@@ -5,13 +5,14 @@ import theme from '../theme'
 const styles = StyleSheet.create({
   input: {
     borderColor: '#e1e4e8',
-    borderWidth: 3,
+    borderWidth: 1,
     borderRadius: 5,
     padding: 15,
     marginHorizontal: 20,
     marginTop: 15,
     backgroundColor: 'white',
     alignItems: 'center',
+    elevation: 4,
   },
   text: {
     color: theme.colors.textSecondary,
