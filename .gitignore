@@ -10,6 +10,7 @@ npm-debug.*
 *.orig.*
 steps.md
 %ProgramData%
+.env
 
 web-build/
 
