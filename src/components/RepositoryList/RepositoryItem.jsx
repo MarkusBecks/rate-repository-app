@@ -1,9 +1,10 @@
 import { Image, View, StyleSheet } from 'react-native'
-import theme from '../theme'
-import Text from './Text'
-import Subheading from './Subheading'
-import FlexRow from './FlexRow'
-import FlexColumnCenter from './FlexColumnCenter'
+
+import theme from '../../themes/theme'
+import Text from '../Text'
+import Subheading from '../Subheading'
+import FlexRow from '../FlexRow'
+import FlexColumnCenter from '../FlexColumnCenter'
 
 const styles = StyleSheet.create({
   img: {
@@ -13,6 +14,7 @@ const styles = StyleSheet.create({
   repositoryContainer: {
     backgroundColor: 'white',
     padding: 20,
+    paddingRight: 30,
     display: 'flex',
   },
   flexColumnPadding: {

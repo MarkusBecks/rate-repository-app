@@ -2,7 +2,7 @@
 import { View, StyleSheet, Pressable } from 'react-native'
 import FormikTextInput from './FormikTextInput'
 import { Formik } from 'formik'
-import theme from '../theme'
+import theme from '../themes/theme'
 import Text from './Text'
 import * as yup from 'yup'
 
