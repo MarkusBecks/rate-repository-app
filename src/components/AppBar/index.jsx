@@ -2,6 +2,7 @@ import { View, StyleSheet, ScrollView } from 'react-native'
 import Constants from 'expo-constants'
 import theme from '../../themes/theme'
 import AppBarTab from './AppBarTab'
+import AuthenticationTab from './AuthenticationTab'
 
 const styles = StyleSheet.create({
   appBarContainer: {
@@ -27,7 +28,7 @@ const AppBar = () => {
         horizontal={true}
       >
         <AppBarTab title="Repositories" to="/" />
-        <AppBarTab title="Sign In" to="/signin" />
+        <AuthenticationTab />
       </ScrollView>
     </View>
   )

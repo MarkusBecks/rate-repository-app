@@ -13,3 +13,14 @@ export const GET_REPOSITORIES = gql`
   }
   ${REPOSITORY_DETAILS}
 `
+
+export const ME = gql`
+  query {
+    me {
+      id
+      username
+      reviewCount
+      createdAt
+    }
+  }
+`

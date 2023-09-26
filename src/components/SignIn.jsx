@@ -2,9 +2,11 @@
 import { View, StyleSheet, Pressable } from 'react-native'
 import FormikTextInput from './FormikTextInput'
 import { Formik } from 'formik'
+import { useNavigate } from 'react-router-native'
 import theme from '../themes/theme'
 import Text from './Text'
 import * as yup from 'yup'
+import useSignIn from '../hooks/useSignin'
 
 const styles = StyleSheet.create({
   formContainer: {
@@ -24,24 +26,42 @@ const styles = StyleSheet.create({
 })
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required('Name is required'),
+  username: yup.string().required('Username is required'),
   password: yup.string().required('Password is required'),
 })
 
 const SignIn = () => {
-  const onSubmit = (values) => {
-    console.log('Values:', values)
+  const [signIn] = useSignIn()
+  const navigate = useNavigate()
+
+  const onSubmit = async (values) => {
+    const { username, password } = values
+
+    try {
+      const { data } = await signIn({ username, password })
+      if (data) {
+        const accessToken = data.authenticate.accessToken
+        console.log('SignIn onSubmit accessToken: ', accessToken)
+        console.log('Sign in')
+        // Navigate user back to repositoriesList
+        navigate('/')
+      } else {
+        console.log('Response does not contain accessToken.')
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
     <Formik
-      initialValues={{ name: '', password: '' }}
+      initialValues={{ username: '', password: '' }}
       onSubmit={onSubmit}
       validationSchema={validationSchema}
     >
       {({ handleSubmit }) => (
         <View style={styles.formContainer}>
-          <FormikTextInput name="name" placeholder="Name" />
+          <FormikTextInput name="username" placeholder="Username" />
           <FormikTextInput
             name="password"
             placeholder="Password"
