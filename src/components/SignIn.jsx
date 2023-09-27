@@ -30,6 +30,37 @@ const validationSchema = yup.object().shape({
   password: yup.string().required('Password is required'),
 })
 
+export const SignInContainer = ({ onSubmit }) => {
+  const submitHandler = async (values) => {
+    // Call the onSubmit prop with just the form values
+    onSubmit(values)
+  }
+
+  return (
+    <Formik
+      initialValues={{ username: '', password: '' }}
+      onSubmit={submitHandler}
+      validationSchema={validationSchema}
+    >
+      {({ handleSubmit }) => (
+        <View style={styles.formContainer}>
+          <FormikTextInput name="username" placeholder="Username" />
+          <FormikTextInput
+            name="password"
+            placeholder="Password"
+            secureTextEntry={true}
+          />
+          <Pressable style={styles.button} onPress={handleSubmit}>
+            <Text color="white" fontWeight="bold" fontSize="subheading">
+              Sign in
+            </Text>
+          </Pressable>
+        </View>
+      )}
+    </Formik>
+  )
+}
+
 const SignIn = () => {
   const [signIn] = useSignIn()
   const navigate = useNavigate()
@@ -52,30 +83,7 @@ const SignIn = () => {
       console.log(e)
     }
   }
-
-  return (
-    <Formik
-      initialValues={{ username: '', password: '' }}
-      onSubmit={onSubmit}
-      validationSchema={validationSchema}
-    >
-      {({ handleSubmit }) => (
-        <View style={styles.formContainer}>
-          <FormikTextInput name="username" placeholder="Username" />
-          <FormikTextInput
-            name="password"
-            placeholder="Password"
-            secureTextEntry={true}
-          />
-          <Pressable style={styles.button} onPress={handleSubmit}>
-            <Text color="white" fontWeight="bold" fontSize="subheading">
-              Sign in
-            </Text>
-          </Pressable>
-        </View>
-      )}
-    </Formik>
-  )
+  return <SignInContainer onSubmit={onSubmit} />
 }
 
 export default SignIn
