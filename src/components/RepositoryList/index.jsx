@@ -1,6 +1,7 @@
-import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native'
-import Text from '../Text'
-import FlexColumnCenter from '../FlexColumnCenter'
+import { FlatList, View, StyleSheet, Pressable } from 'react-native'
+import { useNavigate } from 'react-router-native'
+import ErrorMessage from '../ErrorMessage'
+import Spinner from '../Spinner'
 import RepositoryItem from './RepositoryItem'
 import useRepositories from '../../hooks/useRepositories'
 
@@ -17,28 +18,25 @@ export const RepositoryListContainer = ({ repositories, error, loading }) => {
     ? repositories.edges.map((edge) => edge.node)
     : []
 
+  const navigate = useNavigate()
+
   if (loading) {
-    return (
-      <FlexColumnCenter>
-        <ActivityIndicator size="large" />
-        <Text>Loading...</Text>
-      </FlexColumnCenter>
-    )
+    return <Spinner size="large" />
   }
 
   if (error) {
-    return (
-      <View>
-        <Text>Error: {error.message}</Text>
-      </View>
-    )
+    return <ErrorMessage error={error} />
   }
 
   return (
     <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
-      renderItem={({ item }) => <RepositoryItem repository={item} />}
+      renderItem={({ item }) => (
+        <Pressable onPress={() => navigate(`/${item.id}`)}>
+          <RepositoryItem repository={item} />
+        </Pressable>
+      )}
       keyExtractor={(item) => item.id}
     />
   )

@@ -1,4 +1,4 @@
-import { Image, View, StyleSheet } from 'react-native'
+import { Image, View, StyleSheet, Button } from 'react-native'
 
 import theme from '../../themes/theme'
 import Text from '../Text'
@@ -61,6 +61,7 @@ const RepositoryItem = ({ repository }) => {
     reviewCount,
     ownerAvatarUrl,
   } = repository
+
   return (
     <View testID="repositoryItem" style={styles.repositoryContainer}>
       <FlexRow>
