@@ -9,15 +9,15 @@ const useSignIn = () => {
 
   const signIn = async ({ username, password }) => {
     try {
-      const response = await authenticate({
+      const { data } = await authenticate({
         variables: { username, password },
       })
 
-      const accessToken = response.data?.authenticate.accessToken
+      const accessToken = data?.authenticate.accessToken
       await authStorage.setAccessToken(accessToken)
       await apolloClient.resetStore()
 
-      return response
+      return data
     } catch (error) {
       console.error('Authentication error: ', error)
       throw error

@@ -1,9 +1,10 @@
 import { View, StyleSheet, Pressable } from 'react-native'
-import { Link } from 'react-router-native'
+import { Link, useNavigate } from 'react-router-native'
 import Text from '../Text'
 import useSignOut from '../../hooks/useSignOut'
-import { useQuery } from '@apollo/client'
-import { ME } from '../../graphql/queries'
+import ErrorMessage from '../ErrorMessage'
+import Spinner from '../Spinner'
+import { useAuth } from '../../contexts/AuthContext'
 
 const styles = StyleSheet.create({
   tab: {
@@ -12,28 +13,31 @@ const styles = StyleSheet.create({
   },
 })
 
-/* Render a tab on AppBar based on user's authentication status */
+/* Render a tab based on user's authentication status */
 const AuthenticationTab = () => {
   const { signOut } = useSignOut()
-
-  const { data, loading } = useQuery(ME, {
-    fetchPolicy: 'cache-and-network',
-  })
-
-  const isSignedIn = data?.me
+  // Retrieve user's login status
+  const { data, loading, error } = useAuth()
+  const navigate = useNavigate()
+  const isLoggedIn = data?.me
+  console.log('data ', data)
 
   if (loading) {
-    return null
+    return <Spinner />
   }
 
+  if (error) {
+    return <ErrorMessage error={error} />
+  }
+
+  // sign user out and navigate back to repositories
   const handleSignOut = async () => {
     await signOut()
+    navigate('/')
     console.log('signOut')
   }
 
-  console.log('data.me: ', isSignedIn)
-
-  return isSignedIn ? (
+  return isLoggedIn ? (
     <View style={styles.tab}>
       <Pressable onPress={handleSignOut}>
         <Text fontWeight="bold" color="white">

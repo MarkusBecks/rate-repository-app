@@ -3,6 +3,7 @@ import Constants from 'expo-constants'
 import theme from '../../themes/theme'
 import AppBarTab from './AppBarTab'
 import AuthenticationTab from './AuthenticationTab'
+import { useAuth } from '../../contexts/AuthContext'
 
 const styles = StyleSheet.create({
   appBarContainer: {
@@ -21,14 +22,24 @@ const styles = StyleSheet.create({
 })
 
 const AppBar = () => {
+  const { data } = useAuth()
+  const signedIn = data?.me
+
   return (
     <View style={styles.appBarContainer}>
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
       >
         <AppBarTab title="Repositories" to="/" />
+        {signedIn && (
+          <>
+            <AppBarTab title="Create a review" to="/create-review" />
+          </>
+        )}
         <AuthenticationTab />
+        {!signedIn && <AppBarTab title="Sign up" to="/signup" />}
       </ScrollView>
     </View>
   )

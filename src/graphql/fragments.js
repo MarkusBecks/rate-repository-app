@@ -53,3 +53,17 @@ export const REVIEW_INFO = gql`
     }
   }
 `
+export const ADDED_REVIEW = gql`
+  fragment AddedReview on Review {
+    user {
+      username
+    }
+    repository {
+      name
+      fullName
+      ownerName
+    }
+    rating
+    text
+  }
+`

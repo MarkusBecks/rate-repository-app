@@ -7,6 +7,7 @@ import theme from '../themes/theme'
 import Text from './Text'
 import * as yup from 'yup'
 import useSignIn from '../hooks/useSignin'
+import useCreateUser from '../hooks/useCreateUser'
 
 const styles = StyleSheet.create({
   formContainer: {
@@ -26,11 +27,23 @@ const styles = StyleSheet.create({
 })
 
 const validationSchema = yup.object().shape({
-  username: yup.string().required('Username is required'),
-  password: yup.string().required('Password is required'),
+  username: yup
+    .string()
+    .min(5, 'Username must be at least 5 characters')
+    .max(30, 'Username cannot be longer than 30 characters')
+    .required('Username is required'),
+  password: yup
+    .string()
+    .min(5, 'Password must be at least 5 characters')
+    .max(50, 'Password cannot be longer than 50 characters')
+    .required('Password is required'),
+  passwordConfirmation: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    .required('Password confirmation is required'),
 })
 
-export const SignInContainer = ({ onSubmit }) => {
+export const SignUpContainer = ({ onSubmit }) => {
   const submitHandler = async (values) => {
     // Call the onSubmit prop with just the form values
     onSubmit(values)
@@ -38,7 +51,7 @@ export const SignInContainer = ({ onSubmit }) => {
 
   return (
     <Formik
-      initialValues={{ username: '', password: '' }}
+      initialValues={{ username: '', password: '', passwordConfirmation: '' }}
       onSubmit={submitHandler}
       validationSchema={validationSchema}
     >
@@ -50,9 +63,14 @@ export const SignInContainer = ({ onSubmit }) => {
             placeholder="Password"
             secureTextEntry={true}
           />
+          <FormikTextInput
+            name="passwordConfirmation"
+            placeholder="Password confirmation"
+            secureTextEntry={true}
+          />
           <Pressable style={styles.button} onPress={handleSubmit}>
             <Text color="white" fontWeight="bold" fontSize="subheading">
-              Sign in
+              Sign up
             </Text>
           </Pressable>
         </View>
@@ -61,7 +79,8 @@ export const SignInContainer = ({ onSubmit }) => {
   )
 }
 
-const SignIn = () => {
+const SignUp = () => {
+  const [createUser] = useCreateUser()
   const [signIn] = useSignIn()
   const navigate = useNavigate()
 
@@ -69,18 +88,20 @@ const SignIn = () => {
     const { username, password } = values
 
     try {
-      const data = await signIn({ username, password })
+      const data = await createUser({ username, password })
       if (data) {
-        // Navigate user back to repositoriesList
+        console.log('createUser data: ', data)
+        const signInData = await signIn({ username, password })
+        console.log('signInData data: ', signInData)
         navigate('/')
       } else {
-        console.log('Response does not contain accessToken.')
+        console.log('Creating user failed.')
       }
     } catch (e) {
       console.log(e)
     }
   }
-  return <SignInContainer onSubmit={onSubmit} />
+  return <SignUpContainer onSubmit={onSubmit} />
 }
 
-export default SignIn
+export default SignUp
