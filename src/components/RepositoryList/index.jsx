@@ -1,9 +1,11 @@
 import { FlatList, View, StyleSheet, Pressable } from 'react-native'
 import { useNavigate } from 'react-router-native'
+import { useState } from 'react'
 import ErrorMessage from '../ErrorMessage'
 import Spinner from '../Spinner'
 import RepositoryItem from './RepositoryItem'
 import useRepositories from '../../hooks/useRepositories'
+import SortingMenu from './SortingMenu'
 
 const styles = StyleSheet.create({
   separator: {
@@ -43,14 +45,26 @@ export const RepositoryListContainer = ({ repositories, error, loading }) => {
 }
 
 const RepositoryList = () => {
-  const { repositories, error, loading } = useRepositories()
+  const [sortCriteria, setSortCriteria] = useState('')
+
+  const { repositories, error, loading } = useRepositories(
+    sortCriteria.orderBy,
+    sortCriteria.orderDirection
+  )
+
+  const handleSortChange = (criteria) => {
+    setSortCriteria(criteria)
+  }
 
   return (
-    <RepositoryListContainer
-      repositories={repositories}
-      error={error}
-      loading={loading}
-    />
+    <View>
+      <SortingMenu selectedOption={sortCriteria} onSelect={handleSortChange} />
+      <RepositoryListContainer
+        repositories={repositories}
+        error={error}
+        loading={loading}
+      />
+    </View>
   )
 }
 
