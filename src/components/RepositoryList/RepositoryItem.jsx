@@ -1,10 +1,11 @@
-import { Image, View, StyleSheet, Button } from 'react-native'
+import { Image, View, StyleSheet, Pressable } from 'react-native'
 
 import theme from '../../themes/theme'
 import Text from '../Text'
 import Subheading from '../Subheading'
 import FlexRow from '../FlexRow'
 import FlexColumnCenter from '../FlexColumnCenter'
+import { useNavigate } from 'react-router-native'
 
 const styles = StyleSheet.create({
   img: {
@@ -52,6 +53,7 @@ const formatNumber = (number) => {
 
 const RepositoryItem = ({ repository }) => {
   const {
+    id,
     fullName,
     description,
     language,
@@ -61,36 +63,39 @@ const RepositoryItem = ({ repository }) => {
     reviewCount,
     ownerAvatarUrl,
   } = repository
+  const navigate = useNavigate()
 
   return (
-    <View testID="repositoryItem" style={styles.repositoryContainer}>
-      <FlexRow>
-        <Image source={{ uri: ownerAvatarUrl }} style={styles.img} />
-        <View style={styles.flexColumnPadding}>
-          <Subheading>{fullName}</Subheading>
-          <Text style={styles.description}>{description}</Text>
-          <Text style={styles.language}>{language}</Text>
-        </View>
-      </FlexRow>
-      <FlexRow>
-        <FlexColumnCenter>
-          <Subheading>{formatNumber(stargazersCount)}</Subheading>
-          <Text style={styles.numberHeadings}>Stars</Text>
-        </FlexColumnCenter>
-        <FlexColumnCenter>
-          <Subheading>{formatNumber(forksCount)}</Subheading>
-          <Text style={styles.numberHeadings}>Forks</Text>
-        </FlexColumnCenter>
-        <FlexColumnCenter>
-          <Subheading>{ratingAverage}</Subheading>
-          <Text style={styles.numberHeadings}>Rating</Text>
-        </FlexColumnCenter>
-        <FlexColumnCenter>
-          <Subheading>{reviewCount}</Subheading>
-          <Text style={styles.numberHeadings}>Reviews</Text>
-        </FlexColumnCenter>
-      </FlexRow>
-    </View>
+    <Pressable onPress={() => navigate(`/${id}`)}>
+      <View testID="repositoryItem" style={styles.repositoryContainer}>
+        <FlexRow>
+          <Image source={{ uri: ownerAvatarUrl }} style={styles.img} />
+          <View style={styles.flexColumnPadding}>
+            <Subheading>{fullName}</Subheading>
+            <Text style={styles.description}>{description}</Text>
+            <Text style={styles.language}>{language}</Text>
+          </View>
+        </FlexRow>
+        <FlexRow>
+          <FlexColumnCenter>
+            <Subheading>{formatNumber(stargazersCount)}</Subheading>
+            <Text style={styles.numberHeadings}>Stars</Text>
+          </FlexColumnCenter>
+          <FlexColumnCenter>
+            <Subheading>{formatNumber(forksCount)}</Subheading>
+            <Text style={styles.numberHeadings}>Forks</Text>
+          </FlexColumnCenter>
+          <FlexColumnCenter>
+            <Subheading>{ratingAverage}</Subheading>
+            <Text style={styles.numberHeadings}>Rating</Text>
+          </FlexColumnCenter>
+          <FlexColumnCenter>
+            <Subheading>{reviewCount}</Subheading>
+            <Text style={styles.numberHeadings}>Reviews</Text>
+          </FlexColumnCenter>
+        </FlexRow>
+      </View>
+    </Pressable>
   )
 }
 
