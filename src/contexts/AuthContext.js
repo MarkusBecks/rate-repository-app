@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import useLoginStatus from '../hooks/useLoginStatus'
+import useUser from '../hooks/useUser'
 
 const AuthContext = createContext()
 
@@ -8,7 +8,7 @@ export const useAuth = () => {
 }
 // Provide the user's login status to all children
 export const AuthProvider = ({ children }) => {
-  const { data, error, loading } = useLoginStatus()
+  const { data, error, loading } = useUser()
 
   return (
     <AuthContext.Provider value={{ data, error, loading }}>

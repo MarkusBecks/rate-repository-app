@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { TextInput as NativeTextInput, StyleSheet } from 'react-native'
-import theme from '../themes/theme'
+import theme from '../../themes/theme'
 
 const styles = StyleSheet.create({
   input: {

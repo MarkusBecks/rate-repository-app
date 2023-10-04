@@ -36,6 +36,7 @@ const AppBar = () => {
         {signedIn && (
           <>
             <AppBarTab title="Create a review" to="/create-review" />
+            <AppBarTab title="My reviews" to="/reviews" />
           </>
         )}
         <AuthenticationTab />

@@ -1,7 +1,7 @@
 import RepositoryItem from '../RepositoryList/RepositoryItem'
 import { View, Pressable, StyleSheet } from 'react-native'
 import * as Linking from 'expo-linking'
-import Subheading from '../Subheading'
+import Subheading from '../Utility/Subheading'
 import theme from '../../themes/theme'
 
 const styles = StyleSheet.create({

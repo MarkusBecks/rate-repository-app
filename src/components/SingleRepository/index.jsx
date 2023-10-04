@@ -1,18 +1,11 @@
 import { FlatList, StyleSheet, View } from 'react-native'
-import Spinner from '../Spinner'
+import Spinner from '../Utility/Spinner'
 import { useParams } from 'react-router-native'
 import useRepository from '../../hooks/useRepository'
-import ErrorMessage from '../ErrorMessage'
+import ErrorMessage from '../Utility/ErrorMessage'
 import RepositoryInfo from './RepositoryInfo'
-import ReviewItem from './ReviewItem'
-
-const styles = StyleSheet.create({
-  separator: {
-    height: 10,
-  },
-})
-
-const ItemSeparator = () => <View style={styles.separator} />
+import ReviewItem from '../Reviews/ReviewItem'
+import ItemSeparator from '../Utility/ItemSeparator'
 
 const SingleRepository = () => {
   const { id } = useParams()

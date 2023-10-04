@@ -1,15 +1,8 @@
-import { View, FlatList, StyleSheet } from 'react-native'
-import ErrorMessage from '../ErrorMessage'
-import Spinner from '../Spinner'
+import { FlatList } from 'react-native'
+import ErrorMessage from '../Utility/ErrorMessage'
+import Spinner from '../Utility/Spinner'
 import RepositoryItem from './RepositoryItem'
-
-const styles = StyleSheet.create({
-  separator: {
-    height: 10,
-  },
-})
-
-export const ItemSeparator = () => <View style={styles.separator} />
+import ItemSeparator from '../Utility/ItemSeparator'
 
 const RepositoryListContainer = ({ repositories, error, loading }) => {
   const repositoryNodes = repositories

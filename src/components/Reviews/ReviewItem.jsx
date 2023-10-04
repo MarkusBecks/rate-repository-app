@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native'
 import { format } from 'date-fns'
-import Text from '../Text'
+import Text from '../Utility/Text'
 import theme from '../../themes/theme'
 
 const styles = StyleSheet.create({

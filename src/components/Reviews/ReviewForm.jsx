@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { View, StyleSheet, Pressable } from 'react-native'
-import FormikTextInput from './FormikTextInput'
+import FormikTextInput from '../Utility/FormikTextInput'
 import { Formik } from 'formik'
 import { useNavigate } from 'react-router-native'
-import theme from '../themes/theme'
-import Text from './Text'
+import theme from '../../themes/theme'
+import Text from '../Utility/Text'
 import * as yup from 'yup'
-import useAddReview from '../hooks/useAddReview'
+import useAddReview from '../../hooks/useAddReview'
 
 const styles = StyleSheet.create({
   formContainer: {

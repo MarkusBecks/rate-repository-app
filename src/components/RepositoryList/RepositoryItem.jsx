@@ -1,10 +1,9 @@
 import { Image, View, StyleSheet, Pressable } from 'react-native'
-
 import theme from '../../themes/theme'
-import Text from '../Text'
-import Subheading from '../Subheading'
-import FlexRow from '../FlexRow'
-import FlexColumnCenter from '../FlexColumnCenter'
+import Text from '../Utility/Text'
+import Subheading from '../Utility/Subheading'
+import FlexRow from '../Utility/FlexRow'
+import FlexColumnCenter from '../Utility/FlexColumnCenter'
 import { useNavigate } from 'react-router-native'
 
 const styles = StyleSheet.create({

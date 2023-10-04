@@ -1,9 +1,9 @@
 import { View, StyleSheet, Pressable } from 'react-native'
 import { Link, useNavigate } from 'react-router-native'
-import Text from '../Text'
+import Text from '../Utility/Text'
 import useSignOut from '../../hooks/useSignOut'
-import ErrorMessage from '../ErrorMessage'
-import Spinner from '../Spinner'
+import ErrorMessage from '../Utility/ErrorMessage'
+import Spinner from '../Utility/Spinner'
 import { useAuth } from '../../contexts/AuthContext'
 
 const styles = StyleSheet.create({
