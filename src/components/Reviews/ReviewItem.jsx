@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native'
 import { format } from 'date-fns'
 import Text from '../Utility/Text'
 import theme from '../../themes/theme'
+import Spinner from '../Utility/Spinner'
 
 const styles = StyleSheet.create({
   flexRow: {
@@ -40,8 +41,13 @@ const formatDate = (date) => {
   return format(new Date(date), 'dd.MM.yyyy')
 }
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ review, username }) => {
   const { text, rating, createdAt, user } = review
+
+  if (!review) {
+    return <Spinner size="large" />
+  }
+
   const formattedDate = formatDate(createdAt)
 
   return (
@@ -51,7 +57,7 @@ const ReviewItem = ({ review }) => {
       </View>
       <View style={styles.reviewContainer}>
         <View style={styles.reviewField}>
-          <Text fontWeight="bold">{user.username}</Text>
+          <Text fontWeight="bold">{username ? username : user.username}</Text>
         </View>
         <View style={styles.reviewField}>
           <Text color="textSecondary">{formattedDate}</Text>

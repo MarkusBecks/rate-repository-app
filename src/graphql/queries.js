@@ -1,9 +1,10 @@
 import { gql } from '@apollo/client'
 import {
   REPOSITORY_DETAILS,
-  USER_DETAILS,
   REPO_WITH_URL,
+  REVIEWS,
   REVIEW_INFO,
+  USER_DETAILS,
 } from './fragments'
 
 export const GET_REPOSITORIES = gql`
@@ -28,27 +29,44 @@ export const GET_REPOSITORIES = gql`
 `
 
 export const ME = gql`
-  query {
+  query me($includeReviews: Boolean = false) {
     me {
       ...UserDetails
+      ...Reviews @include(if: $includeReviews)
     }
   }
   ${USER_DETAILS}
+  ${REVIEWS}
 `
 
 export const GET_REPOSITORY = gql`
   query GetRepository($id: ID!) {
     repository(id: $id) {
-      ...RepoWithUrl
+      id
+      ownerAvatarUrl
+      name
+      description
+      language
+      stargazersCount
+      forksCount
+      reviewCount
+      ratingAverage
+      url
+      fullName
       reviews {
         edges {
           node {
-            ...ReviewInfo
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
           }
         }
       }
     }
   }
-  ${REPO_WITH_URL}
-  ${REVIEW_INFO}
 `

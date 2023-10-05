@@ -8,7 +8,7 @@ export const useAuth = () => {
 }
 // Provide the user's login status to all children
 export const AuthProvider = ({ children }) => {
-  const { data, error, loading } = useUser()
+  const { data, error, loading } = useUser({ includeReviews: false })
 
   return (
     <AuthContext.Provider value={{ data, error, loading }}>

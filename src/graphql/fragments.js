@@ -67,3 +67,23 @@ export const ADDED_REVIEW = gql`
     text
   }
 `
+
+export const REVIEWS = gql`
+  fragment Reviews on User {
+    reviews {
+      edges {
+        node {
+          createdAt
+          id
+          rating
+          text
+          repository {
+            id
+            fullName
+            ownerName
+          }
+        }
+      }
+    }
+  }
+`
