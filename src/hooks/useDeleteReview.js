@@ -10,7 +10,6 @@ const useDeleteReview = () => {
 
   const removeReview = async (deleteReviewId) => {
     await deleteReview({ variables: { deleteReviewId } })
-    console.log('removeReview called')
   }
 
   return [removeReview, result]

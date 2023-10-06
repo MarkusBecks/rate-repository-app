@@ -45,7 +45,6 @@ const validationSchema = yup.object().shape({
 
 export const SignUpContainer = ({ onSubmit }) => {
   const submitHandler = async (values) => {
-    // Call the onSubmit prop with just the form values
     onSubmit(values)
   }
 

@@ -15,12 +15,11 @@ const styles = StyleSheet.create({
 
 /* Render a tab based on user's authentication status */
 const AuthenticationTab = () => {
+  const navigate = useNavigate()
   const { signOut } = useSignOut()
   // Retrieve user's login status
   const { data, loading, error } = useAuth()
-  const navigate = useNavigate()
   const isLoggedIn = data?.me
-  console.log('data ', data)
 
   if (loading) {
     return <Spinner />
@@ -34,7 +33,6 @@ const AuthenticationTab = () => {
   const handleSignOut = async () => {
     await signOut()
     navigate('/')
-    console.log('signOut')
   }
 
   return isLoggedIn ? (

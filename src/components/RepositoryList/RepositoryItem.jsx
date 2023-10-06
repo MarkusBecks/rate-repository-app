@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
 
 const formatNumber = (number) => {
   if (number >= 1000) {
-    const thousands = number / 1000 // get thousands
-    return thousands.toFixed(1) + 'k' // add one decimal and append 'k'
+    const thousands = number / 1000
+    return thousands.toFixed(1) + 'k'
   }
   return number.toString()
 }
