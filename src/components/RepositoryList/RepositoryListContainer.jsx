@@ -4,7 +4,12 @@ import Spinner from '../Utility/Spinner'
 import RepositoryItem from './RepositoryItem'
 import ItemSeparator from '../Utility/ItemSeparator'
 
-const RepositoryListContainer = ({ repositories, error, loading }) => {
+const RepositoryListContainer = ({
+  repositories,
+  onEndReach,
+  error,
+  loading,
+}) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : []
@@ -23,6 +28,8 @@ const RepositoryListContainer = ({ repositories, error, loading }) => {
       ItemSeparatorComponent={ItemSeparator}
       renderItem={({ item }) => <RepositoryItem repository={item} />}
       keyExtractor={(item) => item.id}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   )
 }

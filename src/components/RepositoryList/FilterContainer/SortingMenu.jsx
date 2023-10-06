@@ -49,13 +49,22 @@ const styles = StyleSheet.create({
 const SortingMenu = ({ selectedOption, onSelect }) => {
   const [open, setOpen] = useState(false)
   const sortingOptions = [
-    { label: 'Latest review', orderBy: 'CREATED_AT', orderDirection: 'DESC' },
+    {
+      label: 'Latest review',
+      orderBy: 'CREATED_AT',
+      orderDirection: 'DESC',
+    },
     {
       label: 'Highest rated',
       orderBy: 'RATING_AVERAGE',
       orderDirection: 'DESC',
     },
-    { label: 'Lowest rated', orderBy: 'RATING_AVERAGE', orderDirection: 'ASC' },
+    {
+      label: 'Lowest rated',
+      orderBy: 'RATING_AVERAGE',
+      orderDirection: 'ASC',
+    },
+    ,
   ]
 
   return (

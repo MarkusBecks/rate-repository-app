@@ -9,11 +9,16 @@ import ItemSeparator from '../Utility/ItemSeparator'
 
 const SingleRepository = () => {
   const { id } = useParams()
-  const { data, loading, error } = useRepository(id)
+  const { data, loading, error, fetchMore } = useRepository({ id, first: 6 })
 
   const repository = data?.repository
   const reviews = data?.repository.reviews
   const reviewNodes = reviews ? reviews.edges.map((edge) => edge.node) : []
+
+  const onEndReach = () => {
+    fetchMore()
+    console.log('You have reached the end of the list')
+  }
 
   if (loading) {
     return <Spinner size="large" />
@@ -30,6 +35,8 @@ const SingleRepository = () => {
         ItemSeparatorComponent={ItemSeparator}
         renderItem={({ item }) => <ReviewItem review={item} />}
         keyExtractor={(item) => item.id}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
         ListHeaderComponent={
           <>
             <RepositoryInfo repository={repository} />

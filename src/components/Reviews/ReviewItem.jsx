@@ -3,6 +3,9 @@ import { format } from 'date-fns'
 import Text from '../Utility/Text'
 import theme from '../../themes/theme'
 import Spinner from '../Utility/Spinner'
+import ReviewButtons from './ReviewButtons'
+import useDeleteReview from '../../hooks/useDeleteReview'
+import { useNavigate } from 'react-router-native'
 
 const styles = StyleSheet.create({
   flexRow: {
@@ -41,8 +44,22 @@ const formatDate = (date) => {
   return format(new Date(date), 'dd.MM.yyyy')
 }
 
-const ReviewItem = ({ review, username }) => {
-  const { text, rating, createdAt, user } = review
+const ReviewItem = ({ review }) => {
+  const { text, rating, createdAt, repository, user, id } = review
+  const [removeReview] = useDeleteReview()
+  const navigate = useNavigate()
+
+  const handleDeleteReview = async () => {
+    try {
+      await removeReview(id)
+    } catch (e) {
+      console.error('Error deleting review:', e)
+    }
+  }
+
+  const handleViewRepository = () => {
+    navigate(`/${repository.id}`)
+  }
 
   if (!review) {
     return <Spinner size="large" />
@@ -51,22 +68,37 @@ const ReviewItem = ({ review, username }) => {
   const formattedDate = formatDate(createdAt)
 
   return (
-    <View style={styles.flexRow}>
-      <View style={styles.ratingContainer}>
-        <Text style={styles.rating}>{rating}</Text>
+    <>
+      <View style={styles.flexRow}>
+        <View style={styles.ratingContainer}>
+          <Text style={styles.rating}>{rating}</Text>
+        </View>
+        <View style={styles.reviewContainer}>
+          <View style={styles.reviewField}>
+            {/* render the username as title for RepositoryList
+             and repository's full name as title for MyReviews component */}
+            {!user ? (
+              <Text fontWeight="bold">{repository.fullName}</Text>
+            ) : (
+              <Text fontWeight="bold">{user.username}</Text>
+            )}
+          </View>
+          <View style={styles.reviewField}>
+            <Text color="textSecondary">{formattedDate}</Text>
+          </View>
+          <View style={styles.reviewField}>
+            <Text>{text}</Text>
+          </View>
+        </View>
       </View>
-      <View style={styles.reviewContainer}>
-        <View style={styles.reviewField}>
-          <Text fontWeight="bold">{username ? username : user.username}</Text>
-        </View>
-        <View style={styles.reviewField}>
-          <Text color="textSecondary">{formattedDate}</Text>
-        </View>
-        <View style={styles.reviewField}>
-          <Text>{text}</Text>
-        </View>
-      </View>
-    </View>
+      {/* only render ReviewButtons for MyReviews component */}
+      {!user && (
+        <ReviewButtons
+          handleDeleteReview={handleDeleteReview}
+          handleViewRepository={handleViewRepository}
+        />
+      )}
+    </>
   )
 }
 

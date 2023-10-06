@@ -25,22 +25,6 @@ export const USER_DETAILS = gql`
   }
 `
 
-export const REPO_WITH_URL = gql`
-  fragment RepoWithUrl on Repository {
-    id
-    ownerAvatarUrl
-    name
-    description
-    language
-    stargazersCount
-    forksCount
-    reviewCount
-    ratingAverage
-    url
-    fullName
-  }
-`
-
 export const REVIEW_INFO = gql`
   fragment ReviewInfo on Review {
     id
